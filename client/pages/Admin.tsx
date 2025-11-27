@@ -73,6 +73,7 @@ import OtherServicesManagement from "../components/admin/OtherServicesManagement
 import SupportInbox from "../components/admin/SupportInbox";
 import AdvertisementSubmissionsManagement from "../components/admin/AdvertisementSubmissionsManagement";
 import BlogManagement from "../components/admin/BlogManagement";
+import FreeListingLimitsManagement from "../components/admin/FreeListingLimitsManagement";
 import {
   Table,
   TableBody,
