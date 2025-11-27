@@ -97,30 +97,43 @@ const AdvertisementBannerCarousel: React.FC<
   const [error, setError] = useState<string | null>(null);
 
   const defaultSlides = useMemo<BannerAd[]>(
-    () =>
-      FALLBACKS.map((src, i) => ({
-        _id: `ad-default-${i + 1}`,
-        title:
-          i === 0
-            ? "Find Your Dream Home in Rohtak"
-            : i === 1
-              ? "Premium Properties for Sale & Rent"
-              : i === 2
-                ? "Verified Listings - Trusted Real Estate"
-                : "Your Property Partner in Rohtak",
-        description:
-          i === 0
-            ? "Residential • Commercial • Plots - All in One Place"
-            : i === 1
-              ? "1BHK, 2BHK, 3BHK, 4BHK+ Apartments & Villas"
-              : i === 2
-                ? "Expert Guidance • Best Deals • Hassle-Free Experience"
-                : "9896095599 - Contact Us Today!",
-        imageUrl: src,
-        link: "",
-        sortOrder: i + 1,
-        position: "advertisement_banners",
-      })),
+    () => {
+      const bannerData = [
+        {
+          title: "ADVERTISE your Residential Project HERE",
+          description: "Prime Properties • Verified Listings • Best Deals",
+          type: "residential"
+        },
+        {
+          title: "ADVERTISE your Commercial Project HERE",
+          description: "Commercial Spaces • Offices • Retail Shops",
+          type: "commercial"
+        },
+        {
+          title: "ADVERTISE your Investment Project HERE",
+          description: "Investment Opportunities • Guaranteed Returns • Land Deals",
+          type: "investment"
+        },
+        {
+          title: "ADVERTISE Deen Dayal Jan Awas Yojana Project HERE",
+          description: "Affordable Housing • Government Schemes • Low EMI",
+          type: "ddjaay"
+        }
+      ];
+
+      return FALLBACKS.map((src, i) => {
+        const banner = bannerData[i % bannerData.length];
+        return {
+          _id: `ad-default-${i + 1}`,
+          title: banner.title,
+          description: banner.description,
+          imageUrl: src,
+          link: "",
+          sortOrder: i + 1,
+          position: "advertisement_banners",
+        };
+      });
+    },
     [],
   );
 

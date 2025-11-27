@@ -439,13 +439,6 @@ export default function OLXStyleListings() {
                     </div>
                   )}
 
-                  {/* watermark should not steal clicks */}
-                  <Watermark
-                    variant="badge"
-                    small
-                    text="ashishproperties.in"
-                    className="pointer-events-none"
-                  />
 
                   <button
                     onClick={(e) => {

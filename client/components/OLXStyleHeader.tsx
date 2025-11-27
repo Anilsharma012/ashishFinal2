@@ -19,6 +19,8 @@ export default function OLXStyleHeader() {
   const [recent, setRecent] = useState<string[]>(() => {
     try { return JSON.parse(localStorage.getItem("recent_searches") || "[]"); } catch { return []; }
   });
+  const [isLandscapeCollapsed, setIsLandscapeCollapsed] = useState(true);
+  const [isLandscape, setIsLandscape] = useState(false);
   const unread = useNotificationsUnread();
 
   useEffect(() => {
@@ -41,6 +43,17 @@ export default function OLXStyleHeader() {
     const id = setInterval(loadCounts, 60_000);
     return () => { mounted = false; clearInterval(id); };
   }, [token, user]);
+
+  useEffect(() => {
+    const checkLandscape = () => {
+      const isLand = window.innerWidth > window.innerHeight && window.innerWidth < 1024;
+      setIsLandscape(isLand);
+    };
+
+    checkLandscape();
+    window.addEventListener("resize", checkLandscape);
+    return () => window.removeEventListener("resize", checkLandscape);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedQuery(searchQuery.trim()), 250);
