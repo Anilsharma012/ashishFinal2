@@ -160,6 +160,7 @@ export const updateUserFreeListingLimit: RequestHandler = async (req, res) => {
 
 // Get admin settings for default free listing limits
 export const getAdminFreeListingSettings: RequestHandler = async (req, res) => {
+  console.log("✅ getAdminFreeListingSettings API called");
   try {
     const db = getDatabase();
 
