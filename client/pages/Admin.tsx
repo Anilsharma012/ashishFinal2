@@ -803,6 +803,13 @@ export default function Admin() {
               <Edit className="h-8 w-8 mb-2" />
               <span>Manage Content</span>
             </Button>
+            <Button
+              onClick={() => setActiveSection("free-listing-limits")}
+              className="bg-[#C70000] hover:bg-[#A60000] p-6 h-auto flex flex-col"
+            >
+              <Settings className="h-8 w-8 mb-2" />
+              <span>Listing Limits</span>
+            </Button>
           </div>
         </div>
       ) : (
