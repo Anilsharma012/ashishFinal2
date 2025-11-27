@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 
 // Get all users with their listing counts and limits
 export const getUsersWithListingStats: RequestHandler = async (req, res) => {
+  console.log("✅ getUsersWithListingStats API called");
   try {
     const db = getDatabase();
     const { page = "1", limit = "20", search = "" } = req.query;
