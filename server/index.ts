@@ -144,6 +144,15 @@ import {
   firebaseLogin, // <-- ADD THIS
 } from "./routes/auth";
 
+// Free listing limits routes
+import {
+  getUsersWithListingStats,
+  updateUserFreeListingLimit,
+  getAdminFreeListingSettings,
+  updateAdminFreeListingSettings,
+  getUserListingStats,
+} from "./routes/free-listing-limits";
+
 // Admin routes
 import {
   getAllUsers,
