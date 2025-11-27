@@ -1143,6 +1143,8 @@ export default function Admin() {
           return <BankTransferManagement />;
         case "seller-management":
           return <UserManagement />;
+        case "free-listing-limits":
+          return <FreeListingLimitsManagement />;
         case "verification-fields":
           return <SellerVerificationFields />;
         case "seller-review":
