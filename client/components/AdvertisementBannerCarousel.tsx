@@ -100,17 +100,17 @@ const AdvertisementBannerCarousel: React.FC<
     () => {
       const bannerData = [
         {
-          title: "ADVERTISE\nYOUR\nResidential\nProject HERE",
+          title: "ADVERTISE\nYOUR\nResidential Project\nHERE",
           description: "Prime Properties • Verified Listings • Best Deals",
           type: "residential"
         },
         {
-          title: "ADVERTISE\nYOUR\nCommercial\nProject\nHERE",
+          title: "ADVERTISE\nYOUR\nCommercial Project\nHERE",
           description: "Commercial Spaces • Offices • Retail Shops",
           type: "commercial"
         },
         {
-          title: "ADVERTISE\nYOUR\nInvestment\nProject\nHERE",
+          title: "ADVERTISE\nYOUR\nInvestment Project\nHERE",
           description: "Investment Opportunities • Guaranteed Returns • Land Deals",
           type: "investment"
         },
