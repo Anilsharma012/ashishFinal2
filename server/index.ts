@@ -236,6 +236,9 @@ import {
   debugCategories,
   reinitializeCategories,
 } from "./routes/init";
+
+// 3-level category initialization
+import { initializeCategoriesWithMinis } from "./routes/init-3level-categories";
 import {
   getAdminSettings,
   updateAdminSettings,
