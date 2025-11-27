@@ -64,6 +64,17 @@ import {
   getSubcategoriesByCategory as getSubcategoriesByCategoryAdmin,
 } from "./routes/subcategories-new";
 
+// Mini-subcategory routes (new system)
+import {
+  getAllMiniSubcategories,
+  getMiniSubcategoriesBySubcategoryId,
+  createMiniSubcategory,
+  updateMiniSubcategory,
+  deleteMiniSubcategory,
+  toggleMiniSubcategoryActive,
+  getMiniSubcategoriesWithCounts,
+} from "./routes/mini-subcategories";
+
 // Service listings routes
 import {
   getServiceListings,
