@@ -4,8 +4,11 @@ export interface Property {
   description: string;
   price: number;
   priceType: "sale" | "rent"; // per month for rent
-  propertyType: string; // "residential", "commercial", "plot", etc.
-  subCategory: string; // "1bhk", "2bhk", "shop", etc.
+  propertyType: string; // "residential", "commercial", "plot", etc. (legacy, use categoryId/subcategoryId for new system)
+  subCategory: string; // "1bhk", "2bhk", "shop", etc. (legacy, use categoryId/subcategoryId for new system)
+  categoryId?: string; // New 3-level system: Category ID
+  subcategoryId?: string; // New 3-level system: Subcategory ID
+  miniSubcategoryId?: string; // New 3-level system: Mini-subcategory ID (optional, only if defined for the subcategory)
   location: {
     sector?: string;
     mohalla?: string;
