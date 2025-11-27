@@ -71,6 +71,7 @@ interface PropertyFormData {
   priceType: "sale" | "rent";
   propertyType: string; // slug
   subCategory: string; // slug
+  miniSubcategorySlug?: string; // slug for mini-subcategory (optional)
   location: {
     area: string;
     address: string;
@@ -271,6 +272,10 @@ export default function PostProperty() {
   const [categories, setCategories] = useState<NormalizedCategory[]>([]);
   const [catLoading, setCatLoading] = useState(false);
   const [catError, setCatError] = useState<string | null>(null);
+  const [miniSubcategories, setMiniSubcategories] = useState<
+    Array<{ name: string; slug: string }>
+  >([]);
+  const [miniLoading, setMiniLoading] = useState(false);
 
   const [formData, setFormData] = useState<PropertyFormData>({
     title: "",
@@ -279,6 +284,7 @@ export default function PostProperty() {
     priceType: "sale",
     propertyType: "",
     subCategory: "",
+    miniSubcategorySlug: "",
     location: {
       area: "",
       address: "",
@@ -327,6 +333,47 @@ export default function PostProperty() {
       alive = false;
     };
   }, []);
+
+  // Fetch mini-subcategories when subcategory changes
+  useEffect(() => {
+    if (!formData.subCategory) {
+      setMiniSubcategories([]);
+      return;
+    }
+
+    const fetchMiniSubcategories = async () => {
+      try {
+        setMiniLoading(true);
+        // Try to fetch mini-subcategories from admin API (public endpoint if available)
+        const response = await fetch(
+          `/api/admin/mini-subcategories?subcategoryId=${formData.subCategory}`,
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && Array.isArray(data.data)) {
+            // Map mini-subcategories to simple format
+            const minis = Array.isArray(data.data)
+              ? data.data.map((m: any) => ({
+                  name: m.name,
+                  slug: m.slug,
+                }))
+              : [];
+            setMiniSubcategories(minis);
+          }
+        } else {
+          setMiniSubcategories([]);
+        }
+      } catch (error) {
+        console.warn("Failed to fetch mini-subcategories:", error);
+        setMiniSubcategories([]);
+      } finally {
+        setMiniLoading(false);
+      }
+    };
+
+    fetchMiniSubcategories();
+  }, [formData.subCategory]);
 
   // Derivations
   const selectedCategory = categories.find(
@@ -1157,6 +1204,7 @@ export default function PostProperty() {
                   onValueChange={(value) => {
                     handleInputChange("propertyType", value);
                     handleInputChange("subCategory", "");
+                    handleInputChange("miniSubcategorySlug", "");
                   }}
                 >
                   <SelectTrigger
@@ -1196,9 +1244,10 @@ export default function PostProperty() {
                   </label>
                   <Select
                     value={formData.subCategory}
-                    onValueChange={(value) =>
-                      handleInputChange("subCategory", value)
-                    }
+                    onValueChange={(value) => {
+                      handleInputChange("subCategory", value);
+                      handleInputChange("miniSubcategorySlug", "");
+                    }}
                   >
                     <SelectTrigger
                       className={
@@ -1228,6 +1277,54 @@ export default function PostProperty() {
                     availableSubcats.length > 0 && (
                       <p className="text-red-500 text-xs mt-1">
                         Please select a sub category
+                      </p>
+                    )}
+                </div>
+              )}
+
+              {/* Mini Sub Category (Dynamic - only if available) */}
+              {formData.subCategory && miniSubcategories.length > 0 && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {miniSubcategories.length > 0 ? "Type *" : "Type (optional)"}
+                  </label>
+                  <Select
+                    value={formData.miniSubcategorySlug || ""}
+                    onValueChange={(value) =>
+                      handleInputChange("miniSubcategorySlug", value)
+                    }
+                    disabled={miniLoading}
+                  >
+                    <SelectTrigger
+                      className={
+                        !has(formData.miniSubcategorySlug) &&
+                        miniSubcategories.length > 0
+                          ? "border-red-300"
+                          : ""
+                      }
+                    >
+                      <SelectValue
+                        placeholder={
+                          miniLoading
+                            ? "Loading types..."
+                            : miniSubcategories.length
+                              ? "Select type"
+                              : "No types available"
+                        }
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="z-[10050] max-h-[60vh] overscroll-contain z-raise">
+                      {miniSubcategories.map((mini) => (
+                        <SelectItem key={mini.slug} value={mini.slug}>
+                          {mini.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {!has(formData.miniSubcategorySlug) &&
+                    miniSubcategories.length > 0 && (
+                      <p className="text-red-500 text-xs mt-1">
+                        Please select a type
                       </p>
                     )}
                 </div>

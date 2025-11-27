@@ -64,6 +64,17 @@ import {
   getSubcategoriesByCategory as getSubcategoriesByCategoryAdmin,
 } from "./routes/subcategories-new";
 
+// Mini-subcategory routes (new system)
+import {
+  getAllMiniSubcategories,
+  getMiniSubcategoriesBySubcategoryId,
+  createMiniSubcategory,
+  updateMiniSubcategory,
+  deleteMiniSubcategory,
+  toggleMiniSubcategoryActive,
+  getMiniSubcategoriesWithCounts,
+} from "./routes/mini-subcategories";
+
 // Service listings routes
 import {
   getServiceListings,
@@ -225,6 +236,9 @@ import {
   debugCategories,
   reinitializeCategories,
 } from "./routes/init";
+
+// 3-level category initialization
+import { initializeCategoriesWithMinis } from "./routes/init-3level-categories";
 import {
   getAdminSettings,
   updateAdminSettings,
@@ -828,6 +842,12 @@ export function createServer() {
   app.post("/api/init", initializeSystem);
   app.get("/api/debug/categories", debugCategories);
   app.post("/api/debug/reinitialize-categories", reinitializeCategories);
+  app.post(
+    "/api/admin/init-3level-categories",
+    authenticateToken,
+    requireAdmin,
+    initializeCategoriesWithMinis,
+  );
 
   // Authentication routes
   app.post("/api/auth/register", registerUser);
@@ -1037,6 +1057,50 @@ export function createServer() {
     requireAdmin,
     uploadSubcategoryIcon,
     handleSubcategoryIconUpload,
+  );
+
+  // ADMIN Mini-subcategory routes
+  app.get(
+    "/api/admin/mini-subcategories",
+    authenticateToken,
+    requireAdmin,
+    getAllMiniSubcategories,
+  );
+  app.get(
+    "/api/admin/mini-subcategories/by-subcategory/:subcategoryId",
+    authenticateToken,
+    requireAdmin,
+    getMiniSubcategoriesBySubcategoryId,
+  );
+  app.get(
+    "/api/admin/mini-subcategories/:subcategoryId/with-counts",
+    authenticateToken,
+    requireAdmin,
+    getMiniSubcategoriesWithCounts,
+  );
+  app.post(
+    "/api/admin/mini-subcategories",
+    authenticateToken,
+    requireAdmin,
+    createMiniSubcategory,
+  );
+  app.put(
+    "/api/admin/mini-subcategories/:miniSubcategoryId",
+    authenticateToken,
+    requireAdmin,
+    updateMiniSubcategory,
+  );
+  app.delete(
+    "/api/admin/mini-subcategories/:miniSubcategoryId",
+    authenticateToken,
+    requireAdmin,
+    deleteMiniSubcategory,
+  );
+  app.put(
+    "/api/admin/mini-subcategories/:miniSubcategoryId/toggle",
+    authenticateToken,
+    requireAdmin,
+    toggleMiniSubcategoryActive,
   );
 
   // Service listings routes (public)
