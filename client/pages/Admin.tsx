@@ -73,6 +73,7 @@ import OtherServicesManagement from "../components/admin/OtherServicesManagement
 import SupportInbox from "../components/admin/SupportInbox";
 import AdvertisementSubmissionsManagement from "../components/admin/AdvertisementSubmissionsManagement";
 import BlogManagement from "../components/admin/BlogManagement";
+import FreeListingLimitsManagement from "../components/admin/FreeListingLimitsManagement";
 import {
   Table,
   TableBody,
@@ -802,6 +803,13 @@ export default function Admin() {
               <Edit className="h-8 w-8 mb-2" />
               <span>Manage Content</span>
             </Button>
+            <Button
+              onClick={() => setActiveSection("free-listing-limits")}
+              className="bg-[#C70000] hover:bg-[#A60000] p-6 h-auto flex flex-col"
+            >
+              <Settings className="h-8 w-8 mb-2" />
+              <span>Listing Limits</span>
+            </Button>
           </div>
         </div>
       ) : (
@@ -1142,6 +1150,8 @@ export default function Admin() {
           return <BankTransferManagement />;
         case "seller-management":
           return <UserManagement />;
+        case "free-listing-limits":
+          return <FreeListingLimitsManagement />;
         case "verification-fields":
           return <SellerVerificationFields />;
         case "seller-review":

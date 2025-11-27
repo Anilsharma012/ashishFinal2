@@ -80,6 +80,11 @@ export interface User {
     locations: string[];
   };
   favorites: string[]; // property IDs
+  freeListingLimit?: {
+    limit: number; // max free listings
+    period: "monthly" | "yearly"; // reset period
+    limitType: number; // days: 30 for monthly, 365 for yearly
+  };
   createdAt: Date;
   updatedAt: Date;
 }

@@ -140,6 +140,11 @@ const menuItems: MenuItem[] = [
     icon: Users,
     children: [
       { id: "seller-management", label: "Seller Management", icon: Users },
+      {
+        id: "free-listing-limits",
+        label: "Free Listing Limits",
+        icon: Sliders,
+      },
       { id: "verification-fields", label: "Verification Fields", icon: Shield },
       {
         id: "seller-verification",
