@@ -1204,6 +1204,7 @@ export default function PostProperty() {
                   onValueChange={(value) => {
                     handleInputChange("propertyType", value);
                     handleInputChange("subCategory", "");
+                    handleInputChange("miniSubcategorySlug", "");
                   }}
                 >
                   <SelectTrigger
