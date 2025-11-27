@@ -333,6 +333,47 @@ export default function PostProperty() {
     };
   }, []);
 
+  // Fetch mini-subcategories when subcategory changes
+  useEffect(() => {
+    if (!formData.subCategory) {
+      setMiniSubcategories([]);
+      return;
+    }
+
+    const fetchMiniSubcategories = async () => {
+      try {
+        setMiniLoading(true);
+        // Try to fetch mini-subcategories from admin API (public endpoint if available)
+        const response = await fetch(
+          `/api/admin/mini-subcategories?subcategoryId=${formData.subCategory}`,
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && Array.isArray(data.data)) {
+            // Map mini-subcategories to simple format
+            const minis = Array.isArray(data.data)
+              ? data.data.map((m: any) => ({
+                  name: m.name,
+                  slug: m.slug,
+                }))
+              : [];
+            setMiniSubcategories(minis);
+          }
+        } else {
+          setMiniSubcategories([]);
+        }
+      } catch (error) {
+        console.warn("Failed to fetch mini-subcategories:", error);
+        setMiniSubcategories([]);
+      } finally {
+        setMiniLoading(false);
+      }
+    };
+
+    fetchMiniSubcategories();
+  }, [formData.subCategory]);
+
   // Derivations
   const selectedCategory = categories.find(
     (c) => c.slug === formData.propertyType,
