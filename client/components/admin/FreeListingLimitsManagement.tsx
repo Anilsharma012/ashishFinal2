@@ -105,12 +105,11 @@ export default function FreeListingLimitsManagement() {
         search: searchTerm,
       });
 
-      const response = await fetch(
-        `/api/admin/users/listing-stats?${params}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const url = `/api/admin/users/listing-stats?${params}`;
+      console.log("Fetching URL:", url);
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       if (!response.ok) {
         const text = await response.text();
