@@ -842,6 +842,12 @@ export function createServer() {
   app.post("/api/init", initializeSystem);
   app.get("/api/debug/categories", debugCategories);
   app.post("/api/debug/reinitialize-categories", reinitializeCategories);
+  app.post(
+    "/api/admin/init-3level-categories",
+    authenticateToken,
+    requireAdmin,
+    initializeCategoriesWithMinis,
+  );
 
   // Authentication routes
   app.post("/api/auth/register", registerUser);
