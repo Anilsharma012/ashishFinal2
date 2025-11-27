@@ -185,8 +185,17 @@ export default function FreeListingLimitsManagement() {
         }),
       });
 
-      if (!response.ok) throw new Error("Failed to update settings");
+      if (!response.ok) {
+        const text = await response.text();
+        console.error("API Error:", {
+          status: response.status,
+          statusText: response.statusText,
+          body: text,
+        });
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
 
+      const result = await response.json();
       setAdminSettings(tempSettings);
       setShowSettingsDialog(false);
       toast({
@@ -197,7 +206,7 @@ export default function FreeListingLimitsManagement() {
       console.error("Error updating settings:", error);
       toast({
         title: "Error",
-        description: "Failed to update free listing limits",
+        description: `Failed to update settings: ${(error as any)?.message || "Unknown error"}`,
         variant: "destructive",
       });
     } finally {
