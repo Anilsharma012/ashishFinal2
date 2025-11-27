@@ -190,6 +190,7 @@ export default function OLXStyleHeader() {
         </div>
 
         {/* ====== SEARCH BAR ====== */}
+        {!(isLandscape && isLandscapeCollapsed) && (
         <div className="mt-3 relative">
           <form
             onSubmit={handleSearch}
@@ -257,6 +258,7 @@ export default function OLXStyleHeader() {
             )}
           </form>
         </div>
+        )}
       </div>
 
       {/* ====== MOBILE MENU ====== */}
