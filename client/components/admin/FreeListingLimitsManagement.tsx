@@ -145,13 +145,26 @@ export default function FreeListingLimitsManagement() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!response.ok) throw new Error("Failed to fetch settings");
+      if (!response.ok) {
+        const text = await response.text();
+        console.error("API Error:", {
+          status: response.status,
+          statusText: response.statusText,
+          body: text,
+        });
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
 
       const result = await response.json();
       setAdminSettings(result.data);
       setTempSettings(result.data);
     } catch (error) {
       console.error("Error fetching admin settings:", error);
+      toast({
+        title: "Error",
+        description: `Failed to fetch settings: ${(error as any)?.message || "Unknown error"}`,
+        variant: "destructive",
+      });
     }
   };
 
