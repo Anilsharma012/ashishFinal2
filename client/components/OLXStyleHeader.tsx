@@ -96,9 +96,9 @@ export default function OLXStyleHeader() {
 
   return (
     <header className="bg-[#C70000] border-b border-red-800 sticky top-0 z-40">
-      <div className="px-4 py-3">
+      <div className={`px-4 transition-all duration-300 ${isLandscape && isLandscapeCollapsed ? "py-2" : "py-3"}`}>
         {/* ====== TOP BAR ====== */}
-        <div className="relative h-16 md:h-24 flex items-center">
+        <div className={`relative flex items-center ${isLandscape && isLandscapeCollapsed ? "h-10" : "h-16 md:h-24"} transition-all duration-300 cursor-pointer`} onClick={() => isLandscape && setIsLandscapeCollapsed(!isLandscapeCollapsed)}>
           {/* LEFT: Menu + (Mobile Logo) */}
           <div className="absolute left-0 flex items-center gap-2 header-left">
             <button
@@ -109,25 +109,32 @@ export default function OLXStyleHeader() {
               <Menu className="h-7 w-7 text-white" />
             </button>
 
-            {/* Mobile-only logo */}
-           <a href="/" className="flex items-center md:hidden">
-  <img src={ASHISH_LOGO_URL} alt={APP_NAME} className="h-[10rem] w-auto" />
-</a>
+            {/* Mobile-only logo - responsive to landscape */}
+          <a
+            href="/"
+            className={`flex items-center md:hidden transition-all duration-300 ${isLandscape && isLandscapeCollapsed ? "h-8" : "h-[10rem]"}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img src={ASHISH_LOGO_URL} alt={APP_NAME} className={`w-auto transition-all duration-300 ${isLandscape && isLandscapeCollapsed ? "h-7" : "h-[10rem]"}`} />
+          </a>
 
           </div>
 
-          {/* CENTER: Desktop-only big logo */}
-          <a
-            href="/"
-            className="hidden md:inline-flex absolute left-1/2 -translate-x-1/2 items-center center-brand"
-          >
-            <img
-              src={ASHISH_LOGO_URL}
-              alt={APP_NAME}
-              className="block h-24 lg:h-28 xl:h-32 w-auto select-none"
-              style={{ maxHeight: "none" }}   // kill any global cap
-            />
-          </a>
+          {/* CENTER: Desktop-only big logo - hide in landscape collapsed mode */}
+          {!(isLandscape && isLandscapeCollapsed) && (
+            <a
+              href="/"
+              className="hidden md:inline-flex absolute left-1/2 -translate-x-1/2 items-center center-brand transition-all duration-300"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={ASHISH_LOGO_URL}
+                alt={APP_NAME}
+                className="block h-24 lg:h-28 xl:h-32 w-auto select-none"
+                style={{ maxHeight: "none" }}
+              />
+            </a>
+          )}
 
           {/* RIGHT: Actions */}
           <div className="absolute right-0 flex items-center gap-2">
