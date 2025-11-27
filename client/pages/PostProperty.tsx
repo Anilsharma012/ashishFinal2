@@ -1244,9 +1244,10 @@ export default function PostProperty() {
                   </label>
                   <Select
                     value={formData.subCategory}
-                    onValueChange={(value) =>
-                      handleInputChange("subCategory", value)
-                    }
+                    onValueChange={(value) => {
+                      handleInputChange("subCategory", value);
+                      handleInputChange("miniSubcategorySlug", "");
+                    }}
                   >
                     <SelectTrigger
                       className={
@@ -1276,6 +1277,54 @@ export default function PostProperty() {
                     availableSubcats.length > 0 && (
                       <p className="text-red-500 text-xs mt-1">
                         Please select a sub category
+                      </p>
+                    )}
+                </div>
+              )}
+
+              {/* Mini Sub Category (Dynamic - only if available) */}
+              {formData.subCategory && miniSubcategories.length > 0 && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {miniSubcategories.length > 0 ? "Type *" : "Type (optional)"}
+                  </label>
+                  <Select
+                    value={formData.miniSubcategorySlug || ""}
+                    onValueChange={(value) =>
+                      handleInputChange("miniSubcategorySlug", value)
+                    }
+                    disabled={miniLoading}
+                  >
+                    <SelectTrigger
+                      className={
+                        !has(formData.miniSubcategorySlug) &&
+                        miniSubcategories.length > 0
+                          ? "border-red-300"
+                          : ""
+                      }
+                    >
+                      <SelectValue
+                        placeholder={
+                          miniLoading
+                            ? "Loading types..."
+                            : miniSubcategories.length
+                              ? "Select type"
+                              : "No types available"
+                        }
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="z-[10050] max-h-[60vh] overscroll-contain z-raise">
+                      {miniSubcategories.map((mini) => (
+                        <SelectItem key={mini.slug} value={mini.slug}>
+                          {mini.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {!has(formData.miniSubcategorySlug) &&
+                    miniSubcategories.length > 0 && (
+                      <p className="text-red-500 text-xs mt-1">
+                        Please select a type
                       </p>
                     )}
                 </div>
