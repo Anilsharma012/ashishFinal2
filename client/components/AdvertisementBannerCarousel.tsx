@@ -100,22 +100,22 @@ const AdvertisementBannerCarousel: React.FC<
     () => {
       const bannerData = [
         {
-          title: "ADVERTISE your Residential Project HERE",
+          title: "ADVERTISE\nYOUR\nResidential\nProject\nHERE",
           description: "Prime Properties • Verified Listings • Best Deals",
           type: "residential"
         },
         {
-          title: "ADVERTISE your Commercial Project HERE",
+          title: "ADVERTISE\nYOUR\nCommercial\nProject\nHERE",
           description: "Commercial Spaces • Offices • Retail Shops",
           type: "commercial"
         },
         {
-          title: "ADVERTISE your Investment Project HERE",
+          title: "ADVERTISE\nYOUR\nInvestment\nProject\nHERE",
           description: "Investment Opportunities • Guaranteed Returns • Land Deals",
           type: "investment"
         },
         {
-          title: "ADVERTISE Deen Dayal Jan Awas Yojana Project HERE",
+          title: "ADVERTISE\nDeen Dayal Jan Awas\nYojana Project\nHERE",
           description: "Affordable Housing • Government Schemes • Low EMI",
           type: "ddjaay"
         }
