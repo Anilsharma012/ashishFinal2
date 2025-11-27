@@ -439,7 +439,6 @@ export default function OLXStyleListings() {
                     </div>
                   )}
 
-
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -468,7 +467,10 @@ export default function OLXStyleListings() {
                   <div className="flex items-center text-[11px] md:text-xs text-gray-700 mb-2">
                     <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
                     <span className="truncate font-medium">
-                      {property.location?.city || property.location?.address || "Rohtak"}, {property.location?.state || "HR"}
+                      {property.location?.city ||
+                        property.location?.address ||
+                        "Rohtak"}
+                      , {property.location?.state || "HR"}
                     </span>
                   </div>
 
