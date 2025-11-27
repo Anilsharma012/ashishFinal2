@@ -272,6 +272,10 @@ export default function PostProperty() {
   const [categories, setCategories] = useState<NormalizedCategory[]>([]);
   const [catLoading, setCatLoading] = useState(false);
   const [catError, setCatError] = useState<string | null>(null);
+  const [miniSubcategories, setMiniSubcategories] = useState<
+    Array<{ name: string; slug: string }>
+  >([]);
+  const [miniLoading, setMiniLoading] = useState(false);
 
   const [formData, setFormData] = useState<PropertyFormData>({
     title: "",
