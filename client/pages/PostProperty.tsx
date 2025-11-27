@@ -284,6 +284,7 @@ export default function PostProperty() {
     priceType: "sale",
     propertyType: "",
     subCategory: "",
+    miniSubcategorySlug: "",
     location: {
       area: "",
       address: "",
