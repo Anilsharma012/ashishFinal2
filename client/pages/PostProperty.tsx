@@ -71,6 +71,7 @@ interface PropertyFormData {
   priceType: "sale" | "rent";
   propertyType: string; // slug
   subCategory: string; // slug
+  miniSubcategorySlug?: string; // slug for mini-subcategory (optional)
   location: {
     area: string;
     address: string;
