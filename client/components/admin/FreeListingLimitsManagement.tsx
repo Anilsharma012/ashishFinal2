@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import {
-  Settings,
-  Plus,
-  Edit,
-  Save,
-  X,
-  Search,
-  Filter,
-} from "lucide-react";
+import { Settings, Plus, Edit, Save, X, Search, Filter } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
@@ -80,7 +72,8 @@ export default function FreeListingLimitsManagement() {
   });
 
   const [showSettingsDialog, setShowSettingsDialog] = useState(false);
-  const [tempSettings, setTempSettings] = useState<AdminSettings>(adminSettings);
+  const [tempSettings, setTempSettings] =
+    useState<AdminSettings>(adminSettings);
   const [savingSettings, setSavingSettings] = useState(false);
 
   const [editingUser, setEditingUser] = useState<UserListingStat | null>(null);
@@ -237,7 +230,7 @@ export default function FreeListingLimitsManagement() {
             limit: editLimit,
             period: editPeriod,
           }),
-        }
+        },
       );
 
       if (!response.ok) throw new Error("Failed to update user limit");
@@ -328,9 +321,7 @@ export default function FreeListingLimitsManagement() {
           {loading ? (
             <div className="text-center py-8 text-gray-500">Loading...</div>
           ) : users.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              No users found
-            </div>
+            <div className="text-center py-8 text-gray-500">No users found</div>
           ) : (
             <>
               <div className="rounded-md border overflow-hidden">
@@ -350,7 +341,9 @@ export default function FreeListingLimitsManagement() {
                   <TableBody>
                     {users.map((user) => (
                       <TableRow key={user._id}>
-                        <TableCell className="font-medium">{user.name}</TableCell>
+                        <TableCell className="font-medium">
+                          {user.name}
+                        </TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.phone}</TableCell>
                         <TableCell>{user.totalListings}</TableCell>
@@ -488,10 +481,7 @@ export default function FreeListingLimitsManagement() {
             >
               Cancel
             </Button>
-            <Button
-              onClick={handleUpdateSettings}
-              disabled={savingSettings}
-            >
+            <Button onClick={handleUpdateSettings} disabled={savingSettings}>
               {savingSettings ? "Saving..." : "Save Changes"}
             </Button>
           </DialogFooter>
@@ -540,22 +530,17 @@ export default function FreeListingLimitsManagement() {
                 <p className="text-gray-600">Current Usage:</p>
                 <p className="font-medium">
                   {editingUser.freeListingsInPeriod} /{" "}
-                  {editingUser.freeListingLimit.limit} in {editingUser.freeListingLimit.period}
+                  {editingUser.freeListingLimit.limit} in{" "}
+                  {editingUser.freeListingLimit.period}
                 </p>
               </div>
             )}
           </div>
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowEditDialog(false)}
-            >
+            <Button variant="outline" onClick={() => setShowEditDialog(false)}>
               Cancel
             </Button>
-            <Button
-              onClick={handleUpdateUserLimit}
-              disabled={savingUser}
-            >
+            <Button onClick={handleUpdateUserLimit} disabled={savingUser}>
               {savingUser ? "Saving..." : "Save Changes"}
             </Button>
           </DialogFooter>

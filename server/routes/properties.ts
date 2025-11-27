@@ -191,7 +191,7 @@ export const getProperties: RequestHandler = async (req, res) => {
     // --- 4) Sub-category and other filters ---
     if (subCategory) filter.subCategory = norm(subCategory);
     if (priceType) filter.priceType = norm(priceType);
-    
+
     // Premium/Featured properties filter
     if (premium === "true") filter.premium = true;
     if (featured === "true") filter.featured = true;
@@ -899,12 +899,10 @@ export const updateProperty: RequestHandler = async (req, res) => {
     const requestUserId = String(userId);
 
     if (propertyOwnerId !== requestUserId) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          error: "You can only edit your own properties",
-        });
+      return res.status(403).json({
+        success: false,
+        error: "You can only edit your own properties",
+      });
     }
 
     // Handle images

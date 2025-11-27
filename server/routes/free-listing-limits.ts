@@ -37,14 +37,12 @@ export const getUsersWithListingStats: RequestHandler = async (req, res) => {
         const userId = user._id?.toString();
 
         // Get total active listings
-        const totalListings = await db
-          .collection("properties")
-          .countDocuments({
-            ownerId: userId,
-            status: "active",
-            approvalStatus: "approved",
-            isDeleted: { $ne: true },
-          });
+        const totalListings = await db.collection("properties").countDocuments({
+          ownerId: userId,
+          status: "active",
+          approvalStatus: "approved",
+          isDeleted: { $ne: true },
+        });
 
         // Get free listings in current period
         const freeListingLimit = user.freeListingLimit || {
@@ -113,30 +111,33 @@ export const updateUserFreeListingLimit: RequestHandler = async (req, res) => {
     const { userId } = req.params;
     const { limit, period } = req.body;
 
-    if (!userId || typeof limit !== "number" || !["monthly", "yearly"].includes(period)) {
+    if (
+      !userId ||
+      typeof limit !== "number" ||
+      !["monthly", "yearly"].includes(period)
+    ) {
       return res.status(400).json({
         success: false,
-        error: "Invalid parameters: userId, limit (number), and period (monthly/yearly) are required",
+        error:
+          "Invalid parameters: userId, limit (number), and period (monthly/yearly) are required",
       });
     }
 
     const limitType = period === "monthly" ? 30 : 365;
 
-    const result = await db
-      .collection("users")
-      .updateOne(
-        { _id: new ObjectId(userId) },
-        {
-          $set: {
-            freeListingLimit: {
-              limit,
-              period,
-              limitType,
-            },
-            updatedAt: new Date(),
+    const result = await db.collection("users").updateOne(
+      { _id: new ObjectId(userId) },
+      {
+        $set: {
+          freeListingLimit: {
+            limit,
+            period,
+            limitType,
           },
+          updatedAt: new Date(),
         },
-      );
+      },
+    );
 
     if (result.matchedCount === 0) {
       return res.status(404).json({
@@ -193,7 +194,10 @@ export const getAdminFreeListingSettings: RequestHandler = async (req, res) => {
 };
 
 // Update admin settings for default free listing limits
-export const updateAdminFreeListingSettings: RequestHandler = async (req, res) => {
+export const updateAdminFreeListingSettings: RequestHandler = async (
+  req,
+  res,
+) => {
   try {
     const db = getDatabase();
     const { limit, period } = req.body;
@@ -201,26 +205,25 @@ export const updateAdminFreeListingSettings: RequestHandler = async (req, res) =
     if (typeof limit !== "number" || !["monthly", "yearly"].includes(period)) {
       return res.status(400).json({
         success: false,
-        error: "Invalid parameters: limit (number) and period (monthly/yearly) are required",
+        error:
+          "Invalid parameters: limit (number) and period (monthly/yearly) are required",
       });
     }
 
     const limitType = period === "monthly" ? 30 : 365;
 
-    await db
-      .collection("adminSettings")
-      .updateOne(
-        { _id: "freeListingLimits" },
-        {
-          $set: {
-            defaultLimit: limit,
-            defaultPeriod: period,
-            defaultLimitType: limitType,
-            updatedAt: new Date(),
-          },
+    await db.collection("adminSettings").updateOne(
+      { _id: "freeListingLimits" },
+      {
+        $set: {
+          defaultLimit: limit,
+          defaultPeriod: period,
+          defaultLimitType: limitType,
+          updatedAt: new Date(),
         },
-        { upsert: true },
-      );
+      },
+      { upsert: true },
+    );
 
     res.json({
       success: true,
@@ -274,14 +277,12 @@ export const getUserListingStats: RequestHandler = async (req, res) => {
         ],
       });
 
-    const totalListings = await db
-      .collection("properties")
-      .countDocuments({
-        ownerId: userId,
-        status: "active",
-        approvalStatus: "approved",
-        isDeleted: { $ne: true },
-      });
+    const totalListings = await db.collection("properties").countDocuments({
+      ownerId: userId,
+      status: "active",
+      approvalStatus: "approved",
+      isDeleted: { $ne: true },
+    });
 
     res.json({
       success: true,
