@@ -1235,6 +1235,39 @@ export function createServer() {
     requireAdmin,
     bulkDeleteUsers,
   );
+
+  // Free listing limits management routes
+  app.get(
+    "/api/admin/users/listing-stats",
+    authenticateToken,
+    requireAdmin,
+    getUsersWithListingStats,
+  );
+  app.get(
+    "/api/admin/users/:userId/listing-stats",
+    authenticateToken,
+    requireAdmin,
+    getUserListingStats,
+  );
+  app.put(
+    "/api/admin/users/:userId/free-listing-limit",
+    authenticateToken,
+    requireAdmin,
+    updateUserFreeListingLimit,
+  );
+  app.get(
+    "/api/admin/free-listing-settings",
+    authenticateToken,
+    requireAdmin,
+    getAdminFreeListingSettings,
+  );
+  app.put(
+    "/api/admin/free-listing-settings",
+    authenticateToken,
+    requireAdmin,
+    updateAdminFreeListingSettings,
+  );
+
   app.get(
     "/api/admin/properties",
     authenticateToken,
@@ -1365,7 +1398,7 @@ export function createServer() {
   app.put("/api/test-property-approval/:propertyId", async (req, res) => {
     try {
       console.log("🧪 TEST: Property approval request received:");
-      console.log("📋 URL path:", req.path);
+      console.log("��� URL path:", req.path);
       console.log("📋 Route params:", req.params);
       console.log("📋 Property ID:", req.params.propertyId);
       console.log("📋 Request body:", req.body);
