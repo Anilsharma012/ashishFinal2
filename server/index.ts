@@ -1050,6 +1050,50 @@ export function createServer() {
     handleSubcategoryIconUpload,
   );
 
+  // ADMIN Mini-subcategory routes
+  app.get(
+    "/api/admin/mini-subcategories",
+    authenticateToken,
+    requireAdmin,
+    getAllMiniSubcategories,
+  );
+  app.get(
+    "/api/admin/mini-subcategories/by-subcategory/:subcategoryId",
+    authenticateToken,
+    requireAdmin,
+    getMiniSubcategoriesBySubcategoryId,
+  );
+  app.get(
+    "/api/admin/mini-subcategories/:subcategoryId/with-counts",
+    authenticateToken,
+    requireAdmin,
+    getMiniSubcategoriesWithCounts,
+  );
+  app.post(
+    "/api/admin/mini-subcategories",
+    authenticateToken,
+    requireAdmin,
+    createMiniSubcategory,
+  );
+  app.put(
+    "/api/admin/mini-subcategories/:miniSubcategoryId",
+    authenticateToken,
+    requireAdmin,
+    updateMiniSubcategory,
+  );
+  app.delete(
+    "/api/admin/mini-subcategories/:miniSubcategoryId",
+    authenticateToken,
+    requireAdmin,
+    deleteMiniSubcategory,
+  );
+  app.put(
+    "/api/admin/mini-subcategories/:miniSubcategoryId/toggle",
+    authenticateToken,
+    requireAdmin,
+    toggleMiniSubcategoryActive,
+  );
+
   // Service listings routes (public)
   app.get("/api/other-services/listings", getServiceListings);
 
